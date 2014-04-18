@@ -55,7 +55,7 @@ module CTCS
 			
 			case words[0]
 				when 'PROTOCOL'
-					puts "#{words[0]}: Not implemented"
+					receive_protocol words
 
 				when 'AUTH'
 					puts "#{words[0]}: Not implemented"
@@ -64,7 +64,7 @@ module CTCS
 					puts "#{words[0]}: Not implemented"
 
 				when 'CTSTATUS'
-					puts "#{words[0]}: Not implemented"
+					receive_ctstatus words
 
 				when 'CTBW'
 					puts "#{words[0]}: Not implemented"
@@ -162,13 +162,31 @@ module CTCS
 
 		def receive_ctstatus parsed_command
 			matched = STATUS_P2[0].match( parsed_command[1] )
-			
 			@seeders        = matched[:seeders]
 			@total_seeders  = matched[:total_seeders]
 			@leechers       = matched[:leechers]
 			@total_leechers = matched[:total_leechers]
 			@connecting     = matched[:connecting]
+
+			matched = STATUS_P2[1].match( parsed_command[2] )
+			@n_have  = matched[:n_have]
+			@n_total = matched[:n_total]
+			@n_avail = matched[:n_avail]
 			
+			matched = STATUS_P2[2].match( parsed_command[3] )
+			@dl_rate = matched[:dl_rate]
+			@ul_rate = matched[:ul_rate]
+
+			matched = STATUS_P2[3].match( parsed_command[4] )
+			@dl_total = matched[:dl_total]
+			@ul_total = matched[:ul_total]
+
+			matched = STATUS_P2[4].match( parsed_command[5] )
+			@dl_limit = matched[:dl_limit]
+			@ul_limit = matched[:ul_limit]
+
+			matched = STATUS_P2[5].match( parsed_command[6] )
+			@cache_used = matched[:cached]
 		end
 
 		def receive_ctbw parsed_command
