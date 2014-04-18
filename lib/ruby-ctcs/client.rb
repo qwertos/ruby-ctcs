@@ -4,7 +4,10 @@ require 'pp'
 
 module CTCS
 	class Client
-		attr_reader :family, :port, :hostname, :ip, :version
+		attr_reader :family, :port, :hostname, :ip, :version, :filename, 
+		            :peerid, :seeders, :total_seeders, :leechers, :total_leechers,
+		            :connecting, :n_have, :n_total, :n_avail, :dl_rate, :ul_rate,
+		            :dl_total, :ul_total, :dl_limit, :ul_limit, :cache_used
 		
 		def initialize csock
 			@csock = csock
@@ -20,8 +23,8 @@ module CTCS
 
 			@seeders
 			@total_seeders
-			@leachers
-			@total_leachers
+			@leechers
+			@total_leechers
 			@connecting
 			@n_have
 			@n_total
