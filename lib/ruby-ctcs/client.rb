@@ -4,7 +4,7 @@ require 'pp'
 
 module CTCS
 	class Client
-		attr_reader :family, :port, :hostname, :ip
+		attr_reader :family, :port, :hostname, :ip, :version
 		
 		def initialize csock
 			@csock = csock
@@ -13,6 +13,10 @@ module CTCS
 			@port = @csock.addr[1]
 			@hostname = @csock.addr[2]
 			@ip = @csock.addr[3]
+
+			@version = ""
+			@peerid = ""
+			@filename = ""
 
 			@queue = Queue.new
 			
@@ -85,6 +89,110 @@ module CTCS
 
 			end
 		end
+
+		def send_protocol version
+			puts "not implemented"
+		end
+
+		def send_error message
+			puts "not implemented"
+		end
+
+		def send_setdlimit dl_limit
+			puts "not implemented"
+		end
+
+		def send_setulimit ul_limit
+			puts "not implemented"
+		end
+
+		def send_sendstatus
+			puts "not implemented"
+		end
+
+		def send_senddetail
+			puts "not implemented"
+		end
+
+		def send_sendpeers
+			puts "not implemented"
+		end
+
+		def send_sendconf
+			puts "not implemented"
+		end
+
+		def send_ctconfig name, value
+			puts "not implemented"
+		end
+
+
+		def receive_protocol parsed_command
+			@version = parsed_command[1]
+
+			send_protocol "0003"
+		end
+
+		def receive_auth parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctorrent parsed_command
+			@peer_id          = parsed_command[1]
+			start_timestamp   = parsed_command[2]
+			current_timestamp = parsed_command[3]
+			@filename         = parsed_command[4]
+		end
+
+		def receive_ctstatus parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctbw parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctdetail parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctfilestart parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctfile parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctfilesdone parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctpeerstart parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctpeer parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctpeersdone parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctconfigstart parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctconfig parsed_command
+			puts "not implemented"
+		end
+
+		def receive_ctconfigdone parsed_command
+			puts "not implemented"
+		end
+
+
 		
 		def spawn_thread sym
 			Thread.new do
