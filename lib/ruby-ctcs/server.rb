@@ -28,6 +28,7 @@ module CTCS
 				torrents[x.filename][:clients] += 1
 				torrents[x.filename][:n_total] += x.n_total.to_i
 				torrents[x.filename][:n_have]  += x.n_have.to_i
+
 			end
 
 			return torrents
