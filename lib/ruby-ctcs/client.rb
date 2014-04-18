@@ -18,6 +18,22 @@ module CTCS
 			@peerid = ""
 			@filename = ""
 
+			@seeders
+			@total_seeders
+			@leachers
+			@total_leachers
+			@connecting
+			@n_have
+			@n_total
+			@n_avail
+			@dl_rate
+			@ul_rate
+			@dl_total
+			@ul_total
+			@dl_limit
+			@ul_limit
+			@cache_used
+
 			@queue = Queue.new
 			
 			spawn_thread :receive_data
@@ -145,7 +161,14 @@ module CTCS
 		end
 
 		def receive_ctstatus parsed_command
-			puts "not implemented"
+			matched = STATUS_P2[0].match( parsed_command[1] )
+			
+			@seeders        = matched[:seeders]
+			@total_seeders  = matched[:total_seeders]
+			@leechers       = matched[:leechers]
+			@total_leechers = matched[:total_leechers]
+			@connecting     = matched[:connecting]
+			
 		end
 
 		def receive_ctbw parsed_command
