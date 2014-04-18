@@ -1,5 +1,6 @@
 
 require 'socket'
+require 'pp'
 
 module CTCS
 	class Client
@@ -24,13 +25,13 @@ module CTCS
 
 		def receive_data
 			data = @csock.readline
-			@queue << data
+			@queue.push data
 		end
 
 		def handle_data
 			data = @queue.pop
 			data.strip!
-			words = data.split [" "]
+			words = data.split(" ")
 			
 			case words[0]
 				when 'PROTOCOL'
