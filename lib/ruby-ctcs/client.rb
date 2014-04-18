@@ -110,7 +110,7 @@ module CTCS
 		end
 
 		def send_protocol version
-			puts "not implemented"
+			@csock.puts "PROTOCOL #{version}"
 		end
 
 		def send_error message
@@ -149,7 +149,7 @@ module CTCS
 		def receive_protocol parsed_command
 			@version = parsed_command[1]
 
-			send_protocol "0003"
+			send_protocol PROTOCOL_VERSION
 		end
 
 		def receive_auth parsed_command
