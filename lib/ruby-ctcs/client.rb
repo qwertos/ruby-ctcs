@@ -64,7 +64,7 @@ module CTCS
 					puts "#{words[0]}: Not implemented"
 
 				when 'CTORRENT'
-					puts "#{words[0]}: Not implemented"
+					receive_ctorrent words
 
 				when 'CTSTATUS'
 					receive_ctstatus words
