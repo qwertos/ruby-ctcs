@@ -14,6 +14,24 @@ module CTCS
 			spawn_thread :listen
 		end
 
+		def summorize_clients
+			torrents = {}
+			@clients.each do |x|
+				unless torrents.has_key? x.filename then
+					torrents[x.filename] = {
+						:clients => 0,
+						:n_total => 0,
+						:n_have  => 0
+					}
+				end
+
+				torrents[x.filename][:clients] += 1
+				torrents[x.filename][:n_total] += x.n_total
+				torrents[x.filename][:n_have]  += x.n_have
+			end
+
+			return torrents
+		end
 
 
 
