@@ -38,9 +38,25 @@ module CTCS
 			@cache_used = ""
 
 			@queue = Queue.new
+			@ping_respond = false
 			
 			spawn_thread :receive_data
 			spawn_thread :handle_data
+		end
+
+		def pause pause=true
+			send_ctconfig( "pause", (pause ? "1" : "0"))
+		end
+
+		def verbose v=true
+			send_ctconfig( "verbose", (v ? "1" : "0"))
+		end
+
+		def ping timeout=2
+			@ping_respond = false
+			send_sendstatus
+			sleep timeout
+			return @ping_respond
 		end
 
 
@@ -126,7 +142,7 @@ module CTCS
 		end
 
 		def send_sendstatus
-			puts "not implemented"
+			@csock.puts "SENDSTATUS"
 		end
 
 		def send_senddetail
@@ -142,8 +158,9 @@ module CTCS
 		end
 
 		def send_ctconfig name, value
-			puts "not implemented"
+			@csock.puts "CTCONFIG #{name} #{value}"
 		end
+
 
 
 		def receive_protocol parsed_command
@@ -181,6 +198,8 @@ module CTCS
 			@dl_limit       = matched[:dl_limit]
 			@ul_limit       = matched[:ul_limit]
 			@cache_used     = matched[:cached]
+
+			@ping_respond = true
 		end
 
 		def receive_ctbw parsed_command
