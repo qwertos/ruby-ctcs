@@ -40,6 +40,10 @@ module CTCS
 			end
 		end
 
+		def unregister client
+			@clients.delete client
+		end
+
 
 
 		private 
@@ -54,7 +58,7 @@ module CTCS
 		
 		def listen
 			csock = @ssock.accept
-			@clients.push( Client.new( csock ) )
+			@clients.push( Client.new( csock, self ) )
 		end
 	 	
 	end

@@ -9,8 +9,9 @@ module CTCS
 		            :connecting, :n_have, :n_total, :n_avail, :dl_rate, :ul_rate,
 		            :dl_total, :ul_total, :dl_limit, :ul_limit, :cache_used
 		
-		def initialize csock
+		def initialize csock, server
 			@csock = csock
+			@server = server
 
 			@family = @csock.addr[0]
 			@port = @csock.addr[1]
@@ -65,6 +66,12 @@ module CTCS
 
 
 		private
+
+		def unregister
+			@server.unregister self
+			@csock.close
+			@csock = nil
+		end
 
 		def receive_data
 			data = @csock.readline
@@ -129,8 +136,16 @@ module CTCS
 			end
 		end
 
+		def send string
+			begin
+				@csock.puts string
+			rescue Errno::EPIPE
+				unregister
+			end
+		end
+
 		def send_protocol version
-			@csock.puts "PROTOCOL #{version}"
+			send "PROTOCOL #{version}"
 		end
 
 		def send_error message
@@ -146,7 +161,7 @@ module CTCS
 		end
 
 		def send_sendstatus
-			@csock.puts "SENDSTATUS"
+			send "SENDSTATUS"
 		end
 
 		def send_senddetail
@@ -162,7 +177,7 @@ module CTCS
 		end
 
 		def send_ctconfig name, value
-			@csock.puts "CTCONFIG #{name} #{value}"
+			send "CTCONFIG #{name} #{value}"
 		end
 
 
@@ -254,7 +269,7 @@ module CTCS
 		
 		def spawn_thread sym
 			Thread.new do
-				loop do
+				until @csock == nil do
 					send sym
 				end
 			end
