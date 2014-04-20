@@ -231,7 +231,12 @@ module CTCS
 		end
 
 		def receive_ctbw parsed_command
-			puts "not implemented"
+			s_string = parsed_command[1..-1].join " "
+			matched = BW.match( s_string )
+			@dl_rate  = matched[:dl_rate]
+			@ul_rate  = matched[:ul_rate]
+			@dl_limit = matched[:dl_limit]
+			@ul_limit = matched[:ul_limit]
 		end
 
 		def receive_ctdetail parsed_command
