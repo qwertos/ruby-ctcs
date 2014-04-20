@@ -274,7 +274,11 @@ module CTCS
 		def spawn_thread sym
 			Thread.new do
 				until @csock == nil do
-					send sym
+					begin
+						send sym
+					rescue
+						next
+					end
 				end
 			end
 		end
