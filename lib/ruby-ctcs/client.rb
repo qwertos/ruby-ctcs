@@ -67,6 +67,12 @@ module CTCS
 
 		private
 
+		def unregister
+			@server.unregister self
+			@csock.close
+			@csock = nil
+		end
+
 		def receive_data
 			data = @csock.readline
 			@queue.push data
@@ -131,7 +137,11 @@ module CTCS
 		end
 
 		def send_protocol version
-			@csock.puts "PROTOCOL #{version}"
+			begin
+				@csock.puts "PROTOCOL #{version}"
+			rescue Errno::EPIPE
+				unregister
+			end
 		end
 
 		def send_error message
@@ -147,7 +157,11 @@ module CTCS
 		end
 
 		def send_sendstatus
-			@csock.puts "SENDSTATUS"
+			begin
+				@csock.puts "SENDSTATUS"
+			rescue Errno::EPIPE
+				unregister
+			end
 		end
 
 		def send_senddetail
@@ -163,7 +177,11 @@ module CTCS
 		end
 
 		def send_ctconfig name, value
-			@csock.puts "CTCONFIG #{name} #{value}"
+			begin
+				@csock.puts "CTCONFIG #{name} #{value}"
+			rescue Errno::EPIPE
+				unregister
+			end
 		end
 
 
@@ -255,7 +273,7 @@ module CTCS
 		
 		def spawn_thread sym
 			Thread.new do
-				loop do
+				until @csock == nil do
 					send sym
 				end
 			end

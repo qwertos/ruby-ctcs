@@ -40,6 +40,9 @@ module CTCS
 			end
 		end
 
+		def unregister client
+			@clients.delete client
+		end
 
 
 		private 
