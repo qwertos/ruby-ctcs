@@ -34,6 +34,12 @@ module CTCS
 			return torrents
 		end
 
+		def refresh_all
+			@clients.each do |x|
+				x.refresh
+			end
+		end
+
 
 
 		private 

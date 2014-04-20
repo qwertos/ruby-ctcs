@@ -59,6 +59,10 @@ module CTCS
 			return @ping_respond
 		end
 
+		def refresh
+			send_sendstatus
+		end
+
 
 		private
 
