@@ -136,12 +136,24 @@ module CTCS
 			end
 		end
 
+		def send string
+			begin
+				@csock.puts string
+			rescue Errno::EPIPE
+				unregister
+			end
+		end
+
 		def send_protocol version
+<<<<<<< HEAD
+			send "PROTOCOL #{version}"
+=======
 			begin
 				@csock.puts "PROTOCOL #{version}"
 			rescue Errno::EPIPE
 				unregister
 			end
+>>>>>>> dev
 		end
 
 		def send_error message
@@ -157,11 +169,15 @@ module CTCS
 		end
 
 		def send_sendstatus
+<<<<<<< HEAD
+			send "SENDSTATUS"
+=======
 			begin
 				@csock.puts "SENDSTATUS"
 			rescue Errno::EPIPE
 				unregister
 			end
+>>>>>>> dev
 		end
 
 		def send_senddetail
@@ -177,11 +193,15 @@ module CTCS
 		end
 
 		def send_ctconfig name, value
+<<<<<<< HEAD
+			send "CTCONFIG #{name} #{value}"
+=======
 			begin
 				@csock.puts "CTCONFIG #{name} #{value}"
 			rescue Errno::EPIPE
 				unregister
 			end
+>>>>>>> dev
 		end
 
 
