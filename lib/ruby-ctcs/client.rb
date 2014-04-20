@@ -9,8 +9,9 @@ module CTCS
 		            :connecting, :n_have, :n_total, :n_avail, :dl_rate, :ul_rate,
 		            :dl_total, :ul_total, :dl_limit, :ul_limit, :cache_used
 		
-		def initialize csock
+		def initialize csock, server
 			@csock = csock
+			@server = server
 
 			@family = @csock.addr[0]
 			@port = @csock.addr[1]
