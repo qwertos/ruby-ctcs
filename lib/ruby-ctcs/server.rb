@@ -21,13 +21,17 @@ module CTCS
 					torrents[x.filename] = {
 						:clients => 0,
 						:n_total => 0,
-						:n_have  => 0
+						:n_have  => 0,
+						:total_dl_rate => 0,
+						:total_ul_rate => 0
 					}
 				end
 
 				torrents[x.filename][:clients] += 1
 				torrents[x.filename][:n_total] += x.n_total.to_i
 				torrents[x.filename][:n_have]  += x.n_have.to_i
+				torrents[x.filename][:total_dl_rate] += x.dl_rate.to_i
+				torrents[x.filename][:total_ul_rate] += x.ul_rate.to_i
 
 			end
 
