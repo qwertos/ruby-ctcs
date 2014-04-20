@@ -102,7 +102,7 @@ module CTCS
 					receive_ctstatus words
 
 				when 'CTBW'
-					puts "#{words[0]}: Not implemented"
+					recieve_ctbw words
 
 				when 'CTDETAIL'
 					puts "#{words[0]}: Not implemented"
