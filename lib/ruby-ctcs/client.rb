@@ -46,8 +46,8 @@ module CTCS
 			@queue = Queue.new
 			@ping_respond = false
 			
-			spawn_thread :receive_data
-			spawn_thread :handle_data
+			@r_thread = spawn_thread :receive_data
+			@s_thread = spawn_thread :handle_data
 		end
 
 		def pause pause=true
@@ -76,6 +76,10 @@ module CTCS
 			@server.unregister self
 			@csock.close
 			@csock = nil
+			@r_thread.kill
+			@s_thread.kill
+			@r_thread = nil
+			@s_thread = nil
 		end
 
 		def receive_data
@@ -282,7 +286,7 @@ module CTCS
 
 		
 		def spawn_thread sym
-			Thread.new do
+			t = Thread.new do
 				until @csock == nil do
 					begin
 						send sym
@@ -291,6 +295,7 @@ module CTCS
 					end
 				end
 			end
+			return t
 		end
 
 	end
