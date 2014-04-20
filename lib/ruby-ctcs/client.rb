@@ -38,6 +38,11 @@ module CTCS
 			@ul_limit = ""
 			@cache_used = ""
 
+			@dl_rate = ""
+			@ul_rate = ""
+			@dl_limit = ""
+			@ul_limit = ""
+
 			@queue = Queue.new
 			@ping_respond = false
 			
