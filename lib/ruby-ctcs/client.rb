@@ -244,7 +244,10 @@ module CTCS
 		end
 
 		def receive_ctdetail parsed_command
-			puts "not implemented"
+			s_string = parsed_command[1..-1].join " "
+			matched = CTDETAIL.match( s_string )
+
+			
 		end
 
 		def receive_ctfilestart parsed_command
