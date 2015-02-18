@@ -4,6 +4,7 @@ require 'socket'
 module CTCS
 	class Server
 		attr_reader :port
+		attr_reader :clients
 
 
 		# Create the server and begin listening
