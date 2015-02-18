@@ -4,7 +4,11 @@ require 'socket'
 module CTCS
 	class Server
 		attr_reader :port
-		
+
+
+		# Create the server and begin listening
+		#
+		# @param port [Integer] Port number to listen on
 		def initialize port
 			@port = port
 			@clients = []
@@ -14,6 +18,10 @@ module CTCS
 			spawn_thread :listen
 		end
 
+
+		# Get information on the clients
+		#
+		# @return [Hash] Client info
 		def summorize_clients
 			torrents = {}
 			@clients.each do |x|
@@ -38,12 +46,19 @@ module CTCS
 			return torrents
 		end
 
+
+		# Refresh the data the server has on the clients.
 		def refresh_all
 			@clients.each do |x|
 				x.refresh
 			end
 		end
 
+
+		# Remove client from the client info array.
+		#
+		# @param client [Client] Client to unregister from the
+		#   server.
 		def unregister client
 			@clients.delete client
 		end
