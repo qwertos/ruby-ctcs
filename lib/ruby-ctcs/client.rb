@@ -148,11 +148,7 @@ module CTCS
 		end
 
 		def send_protocol version
-			begin
-				@csock.puts "PROTOCOL #{version}"
-			rescue Errno::EPIPE
-				unregister
-			end
+			send "PROTOCOL #{version}"
 		end
 
 		def send_error message
@@ -160,11 +156,7 @@ module CTCS
 		end
 
 		def send_setdlimit dl_limit
-			begin
-				@csock.puts "SETDLIMIT #{dl_limit}"
-			rescue Errno::EPIPE
-				unregister
-			end
+			send "SETDLIMIT #{dl_limit}"
 		end
 
 		def send_setulimit ul_limit
@@ -172,11 +164,7 @@ module CTCS
 		end
 
 		def send_sendstatus
-			begin
-				@csock.puts "SENDSTATUS"
-			rescue Errno::EPIPE
-				unregister
-			end
+			send "SENDSTATUS"
 		end
 
 		def send_senddetail
@@ -192,11 +180,7 @@ module CTCS
 		end
 
 		def send_ctconfig name, value
-			begin
-				@csock.puts "CTCONFIG #{name} #{value}"
-			rescue Errno::EPIPE
-				unregister
-			end
+			send "CTCONFIG #{name} #{value}"
 		end
 
 		def send command
