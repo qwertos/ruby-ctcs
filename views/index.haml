@@ -32,4 +32,4 @@
             %td= c.n_total
             %td= c.dl_rate
             %td= c.ul_rate
-            %td= ((( client.n_have.to_f / client.n_total.to_f ) * 1000 ).to_i.to_f / 10 )
+            %td= ((( c.n_have.to_f / c.n_total.to_f ) * 1000 ).to_i.to_f / 10 )
