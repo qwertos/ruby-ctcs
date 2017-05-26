@@ -33,3 +33,23 @@
             %td= c.dl_rate
             %td= c.ul_rate
             %td= ((( c.n_have.to_f / c.n_total.to_f ) * 1000 ).to_i.to_f / 10 )
+    %table{ border: "1" }
+      %thead
+        %tr
+          %th Filename
+          %th Clients
+          %th Total Parts
+          %th Have Parts
+          %th Total DL Rate
+          %th Total UL Rate
+      %tbody
+        - @server.summorize_clients.each do |filename, info|
+          %tr
+            %td= filename
+            %td= info[:clients]
+            %td= info[:n_total]
+            %td= info[:n_have]
+            %td= info[:total_dl_rate]
+            %td= info[:total_ul_rate]
+
+
