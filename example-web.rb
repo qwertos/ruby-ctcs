@@ -1,16 +1,9 @@
 #!/usr/bin/env ruby
 #
-require 'sinatra'
+require 'sinatra/base'
 require_relative 'lib/ruby-ctcs.rb'
 require 'pp'
 require 'haml'
-
-set :bind, "0.0.0.0"
-
-$server = CTCS::Server.new 2780
-
-$CLEAR = `clear`
-
 
 =begin
 loop do
@@ -20,17 +13,24 @@ loop do
 	sleep 1
 end
 =end
+$CLEAR = `clear`
+
+class MyApp < Sinatra::Application
+	set :bind, "0.0.0.0"
+
+	def initialize app=nil
+		super app
+
+		@server = CTCS::Server.new 2780
+	end
 
 
-get '/' do 
-	$server.refresh_all
-	
-	haml :index
+	get '/' do 
+		@server.refresh_all
+		
+		haml :index
+	end
+
+	run! if app_file == $0
 end
-
-
-
-
-
-
 

@@ -20,7 +20,7 @@
           %th Up Rate
           %th Percent
       %tbody
-        - $server.clients.each do |c|
+        - @server.clients.each do |c|
           %tr
             %td= c.hostname
             %td= c.filename
