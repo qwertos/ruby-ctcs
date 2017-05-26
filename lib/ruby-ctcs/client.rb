@@ -1,3 +1,5 @@
+# vim: set foldmethod=syntax :
+
 
 require 'socket'
 require 'pp'
