@@ -160,7 +160,7 @@ module CTCS
 		end
 
 		def send_setulimit ul_limit
-			puts "not implemented"
+			send "SETULIMIT #{ul_limit}"
 		end
 
 		def send_sendstatus
