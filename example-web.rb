@@ -4,8 +4,9 @@ require 'sinatra'
 require_relative 'lib/ruby-ctcs.rb'
 require 'pp'
 
+set :bind, "0.0.0.0"
 
-$server = CTCS::Server.new 51193
+$server = CTCS::Server.new 2780
 
 $CLEAR = `clear`
 
