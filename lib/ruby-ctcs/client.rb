@@ -160,7 +160,11 @@ module CTCS
 		end
 
 		def send_setdlimit dl_limit
-			puts "not implemented"
+			begin
+				@csock.puts "SETDLIMIT #{dl_limit}"
+			rescue Errno::EPIPE
+				unregister
+			end
 		end
 
 		def send_setulimit ul_limit
