@@ -199,6 +199,14 @@ module CTCS
 			end
 		end
 
+		def send command
+			begin
+				@csock.puts command
+			rescue Errno::EPIPE
+				unregister
+			end
+		end
+			
 
 
 		def receive_protocol parsed_command
