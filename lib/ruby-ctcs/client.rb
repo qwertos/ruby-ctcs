@@ -208,7 +208,7 @@ module CTCS
 		end
 
 		def receive_ctorrent parsed_command
-			@peer_id          = parsed_command[1]
+			@peerid           = parsed_command[1]
 			start_timestamp   = parsed_command[2]
 			current_timestamp = parsed_command[3]
 			@filename         = parsed_command[4]
