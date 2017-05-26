@@ -1,0 +1,35 @@
+%html
+  %head
+    %title Ruby CTCS
+    %meta{ :"http-equiv" => "refresh", content: "5" }
+    %link{ rel: "stylesheet", type: "text/css", href: "css/foundation.css" }
+  %body
+    %h1 Ruby CTCS
+    %table
+      %thead
+        %tr
+          %th IP
+          %th Torrent Name
+          %th Peer ID
+          %th Total Leachers
+          %th Total Seeders
+          %th Available
+          %th Have
+          %th Total
+          %th Down Rate
+          %th Up Rate
+          %th Percent
+      %tbody
+        - $server.clients.each do |c|
+          %tr
+            %td= c.hostname
+            %td= c.filename
+            %td= c.peerid
+            %td= c.total_leechers
+            %td= c.total_seeders
+            %td= c.n_avail
+            %td= c.n_have
+            %td= c.n_total
+            %td= c.dl_rate
+            %td= c.ul_rate
+            %td= ((( client.n_have.to_f / client.n_total.to_f ) * 1000 ).to_i.to_f / 10 )
